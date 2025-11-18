@@ -3,122 +3,180 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🌈 My Interactive Page</title>
+  <title>🌈 CSS Color Functions Demo</title>
 
   <style>
     body {
       font-family: 'Poppins', sans-serif;
       text-align: center;
       padding: 2rem;
-      transition: background-color 0.6s ease, color 0.3s ease;
-      background-color: #fff8e7;
+      background: #fff8e7;
       color: #333;
+      transition: background 0.5s ease;
     }
 
-    h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+    h1 { font-size: 2.2rem; }
+    h2 { margin-top: 2rem; }
 
     button {
       padding: 1rem 2rem;
+      margin-top: 1rem;
       font-size: 1.2rem;
       border: none;
       border-radius: 10px;
-      background-color: #ffd54f;
       cursor: pointer;
+      background: #ffd54f;
       transition: background-color 0.4s ease;
     }
 
-    button:hover { background-color: #ffb300; }
-
-    /* Modern dark mode using CSS color-mix() */
     .dark {
       background-color: color-mix(in oklab, #222, black 40%);
       color: white;
     }
 
-    #quote {
-      margin-top: 1.5rem;
-      font-style: italic;
-      font-size: 1.2rem;
+    #demoBox {
+      width: 100%;
+      max-width: 400px;
+      margin: 1.5rem auto;
+      height: 130px;
+      border-radius: 12px;
+      transition: background 0.5s ease;
     }
 
-    #counter {
-      margin-top: 1rem;
-      font-weight: bold;
+    .demo-section {
+      margin: 1.5rem auto;
+      padding: 1rem;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 450px;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: background 0.4s ease;
+    }
+
+    code {
+      display: block;
+      background: #eee;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      margin-top: 8px;
     }
   </style>
 </head>
-
 <body>
-  <h1 id="welcome">👋 Hello there!</h1>
-  <p id="greeting">Let's make your page come alive ✨</p>
 
-  <p id="quote">Quote loading...</p>
-
-  <button id="themeBtn">🌗 Toggle Magic Mode</button>
-
+  <h1>🎨 Full CSS Color Functions Demo</h1>
+  <p id="quote">Loading quote...</p>
+  <button id="themeBtn">🌗 Toggle Mode</button>
   <p id="counter">Button clicks: 0</p>
 
-  <script>
-    const btn = document.getElementById('themeBtn');
-    const body = document.body;
+  <!-- MAIN COLOR FUNCTION DISPLAY BOX -->
+  <div id="demoBox"></div>
 
-    // HSL rainbow hue rotation
+  <!-- INDIVIDUAL COLOR FUNCTION SECTIONS -->
+  <div class="demo-section" id="rgbBox">
+    <h2>rgb() / rgba()</h2>
+    <code>background: rgb(255 120 120 / 80%)</code>
+  </div>
+
+  <div class="demo-section" id="hslBox">
+    <h2>hsl()</h2>
+    <code>background: hsl(200 90% 60%)</code>
+  </div>
+
+  <div class="demo-section" id="hwbBox">
+    <h2>hwb()</h2>
+    <code>background: hwb(260 10% 20%)</code>
+  </div>
+
+  <div class="demo-section" id="labBox">
+    <h2>lab()</h2>
+    <code>background: lab(70% -10 40)</code>
+  </div>
+
+  <div class="demo-section" id="lchBox">
+    <h2>lch()</h2>
+    <code>background: lch(70% 80 40)</code>
+  </div>
+
+  <div class="demo-section" id="oklabBox">
+    <h2>oklab()</h2>
+    <code>background: oklab(75% -0.1 0.3)</code>
+  </div>
+
+  <div class="demo-section" id="oklchBox">
+    <h2>oklch()</h2>
+    <code>background: oklch(70% 0.2 40)</code>
+  </div>
+
+  <div class="demo-section" id="colormixBox">
+    <h2>color-mix()</h2>
+    <code>background: color-mix(in srgb, red 60%, blue)</code>
+  </div>
+
+  <div class="demo-section" id="colorcontrastBox">
+    <h2>color-contrast()</h2>
+    <code>color: color-contrast(white vs black, yellow, blue)</code>
+    <p>Text auto chooses readable color</p>
+  </div>
+
+  <script>
+    // MAIN ELEMENTS
+    const btn = document.getElementById("themeBtn");
+    const body = document.body;
+    const demoBox = document.getElementById("demoBox");
+
+    let clickCount = 0;
     let hue = 0;
 
-    // Click counter
-    let clickCount = 0;
-
-    // Quotes
     const quotes = [
-      "Believe you can and you're halfway there.",
-      "Do something today that your future self will thank you for.",
-      "Every moment is a fresh beginning.",
-      "Dream big and dare to fail.",
-      "You are capable of amazing things.",
-      "Little steps every day lead to big results."
+      "Color is a power which directly influences the soul.",
+      "Colors speak all languages.",
+      "Life is about using the whole box of crayons.",
+      "Color is the place where our brain meets the universe.",
+      "In nature, light creates color."
     ];
 
-    btn.addEventListener('click', () => {
-      // Toggle theme
-      body.classList.toggle('dark');
+    // CLICK HANDLER
+    btn.addEventListener("click", () => {
+      body.classList.toggle("dark");
 
-      // Increase click count
       clickCount++;
-      document.getElementById('counter').textContent =
+      document.getElementById("counter").textContent =
         `Button clicks: ${clickCount}`;
 
-      // 🌈 Rainbow color rotation using HSL math
+      // Rainbow hue rotation
       hue = (hue + 40) % 360;
 
-      // Mix the rainbow color with white for softer tones
-      const rainbowColor = `hsl(${hue}, 80%, 60%)`;
-      const mixedColor = `color-mix(in srgb, ${rainbowColor}, white 20%)`;
+      // color-mix() applied to button
+      const pure = `hsl(${hue}, 80%, 60%)`;
+      const mixed = `color-mix(in srgb, ${pure}, white 20%)`;
+      btn.style.backgroundColor = mixed;
 
-      // Apply the mixed color
-      btn.style.backgroundColor = mixedColor;
+      // New quote
+      const q = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById("quote").textContent = `💬 "${q}"`;
 
-      // New quote every click
-      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-      document.getElementById('quote').textContent = `💬 "${randomQuote}"`;
+      // Update demo box color
+      demoBox.style.background = pure;
     });
 
-    // Ask name
-    const name = prompt("What's your name?");
-    if (name) {
-      document.getElementById('welcome').textContent = `Welcome, ${name}! 🎉`;
-    }
+    // INITIAL QUOTE
+    document.getElementById("quote").textContent =
+      `💬 "${quotes[Math.floor(Math.random() * quotes.length)]}"`;
 
-    // Dynamic greeting
-    const hour = new Date().getHours();
-    let message;
-    if (hour < 12) message = "☀️ Good morning!";
-    else if (hour < 18) message = "🌤️ Good afternoon!";
-    else message = "🌙 Good evening!";
-    document.getElementById('greeting').textContent = message;
-
-    // Initial quote
-    const firstQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    document.getElementById('quote').textContent = `💬 "${firstQuote}"`;
+    // STATIC COLOR FUNCTION DEMOS
+    rgbBox.style.background = "rgb(255 120 120 / 80%)";
+    hslBox.style.background = "hsl(200 90% 60%)";
+    hwbBox.style.background = "hwb(260 10% 20%)";
+    labBox.style.background = "lab(70% -10 40)";
+    lchBox.style.background = "lch(70% 80 40)";
+    oklabBox.style.background = "oklab(75% -0.1 0.3)";
+    oklchBox.style.background = "oklch(70% 0.2 40)";
+    colormixBox.style.background = "color-mix(in srgb, red 60%, blue)";
+    colorcontrastBox.style.color =
+      "color-contrast(white vs black, yellow, blue)";
   </script>
 </body>
 </html>
