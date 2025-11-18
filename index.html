@@ -53,26 +53,35 @@
     const btn = document.getElementById('themeBtn');
     const body = document.body;
 
-    // Colors to cycle through
+    // Colors for cycling button background
     const colors = ["#ffd54f", "#ff8a80", "#80d8ff", "#ccff90", "#ea80fc", "#ffab40"];
     let clickCount = 0;
 
+    // Quotes list
+    const quotes = [
+      "Believe you can and you're halfway there.",
+      "Do something today that your future self will thank you for.",
+      "Every moment is a fresh beginning.",
+      "Dream big and dare to fail.",
+      "You are capable of amazing things.",
+      "Little steps every day lead to big results."
+    ];
+
+    // Button click handler
     btn.addEventListener('click', () => {
-  body.classList.toggle('dark');
+      body.classList.toggle('dark');
 
-  // Increment click counter
-  clickCount++;
-  document.getElementById('counter').textContent = `Button clicks: ${clickCount}`;
+      // Increment click counter
+      clickCount++;
+      document.getElementById('counter').textContent = `Button clicks: ${clickCount}`;
 
-  // Change button color each click
-  const nextColor = colors[clickCount % colors.length];
-  btn.style.backgroundColor = nextColor;
+      // Color change each click
+      const nextColor = colors[clickCount % colors.length];
+      btn.style.backgroundColor = nextColor;
 
-  // Change quote every click
-  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-  document.getElementById('quote').textContent = `💬 "${randomQuote}"`;
-});
-
+      // Change quote every click
+      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById('quote').textContent = `💬 "${randomQuote}"`;
     });
 
     // Ask for visitor's name
@@ -89,18 +98,9 @@
     else message = "🌙 Good evening!";
     document.getElementById('greeting').textContent = message;
 
-    // Quote of the day
-    const quotes = [
-      "Believe you can and you're halfway there.",
-      "Do something today that your future self will thank you for.",
-      "Every moment is a fresh beginning.",
-      "Dream big and dare to fail.",
-      "You are capable of amazing things.",
-      "Little steps every day lead to big results."
-    ];
-
-    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    document.getElementById('quote').textContent = `💬 "${randomQuote}"`;
+    // First quote on page load
+    const firstQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('quote').textContent = `💬 "${firstQuote}"`;
   </script>
 </body>
 </html>
