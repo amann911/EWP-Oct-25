@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🌈 CSS Color Functions Demo</title>
-
+  <title>🌈 Interactive + 3D Text Demo</title>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -12,11 +11,8 @@
       padding: 2rem;
       background: #fff8e7;
       color: #333;
-      transition: background 0.5s ease;
+      transition: background 0.5s ease, color 0.3s ease;
     }
-
-    h1 { font-size: 2.2rem; }
-    h2 { margin-top: 2rem; }
 
     button {
       padding: 1rem 2rem;
@@ -27,6 +23,10 @@
       cursor: pointer;
       background: #ffd54f;
       transition: background-color 0.4s ease;
+    }
+
+    button:hover {
+      background-color: #ffb300;
     }
 
     .dark {
@@ -68,75 +68,64 @@
       font-style: italic;
       font-size: 0.95rem;
     }
+
+    /* ============ 3D Layered Text Styles ============ */
+    .text-3d-container {
+      perspective: 600px;
+      margin-top: 2rem;
+    }
+
+    .text-3d {
+      position: relative;
+      font-size: 4rem;
+      font-weight: 900;
+      transform: rotateX(25deg);
+      transform-style: preserve-3d;
+      color: #ff8a80;
+    }
+
+    .text-3d .layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: center;
+      /* Use a CSS variable for the depth offset */
+      transform: translateZ(calc(var(--i) * -1px));
+      opacity: calc(1 - var(--i) * 0.02);
+    }
   </style>
 </head>
 <body>
+  <h1 id="welcome">👋 Hello there!</h1>
+  <p id="greeting">Let's make your page come alive ✨</p>
 
-  <h1>🎨 Full CSS Color Functions Demo</h1>
   <p id="quote">Loading quote...</p>
   <button id="themeBtn">🌗 Toggle Mode</button>
   <p id="counter">Button clicks: 0</p>
 
-  <!-- MAIN COLOR FUNCTION DISPLAY BOX -->
   <div id="demoBox"></div>
 
-  <!-- INDIVIDUAL COLOR FUNCTION SECTIONS WITH DESCRIPTIONS -->
-  <div class="demo-section" id="rgbBox">
-    <h2>rgb() / rgba()</h2>
-    <p class="demo-description">🔴 Classic Red with transparency, easy to combine!</p>
-    <code>background: rgb(255 120 120 / 80%)</code>
-  </div>
+  <!-- Your existing demo-sections go here … -->
 
-  <div class="demo-section" id="hslBox">
-    <h2>hsl()</h2>
-    <p class="demo-description">🌊 Cool Blue – tweak hue for rainbow effects.</p>
-    <code>background: hsl(200 90% 60%)</code>
-  </div>
-
-  <div class="demo-section" id="hwbBox">
-    <h2>hwb()</h2>
-    <p class="demo-description">🎨 Mix hue, whiteness & blackness for smooth shades.</p>
-    <code>background: hwb(260 10% 20%)</code>
-  </div>
-
-  <div class="demo-section" id="labBox">
-    <h2>lab()</h2>
-    <p class="demo-description">💡 Lab is perceptually uniform – colors look consistent.</p>
-    <code>background: lab(70% -10 40)</code>
-  </div>
-
-  <div class="demo-section" id="lchBox">
-    <h2>lch()</h2>
-    <p class="demo-description">🌈 LCH separates lightness, chroma & hue for precision.</p>
-    <code>background: lch(70% 80 40)</code>
-  </div>
-
-  <div class="demo-section" id="oklabBox">
-    <h2>oklab()</h2>
-    <p class="demo-description">✨ Modern color model for perceptually even shades.</p>
-    <code>background: oklab(75% -0.1 0.3)</code>
-  </div>
-
-  <div class="demo-section" id="oklchBox">
-    <h2>oklch()</h2>
-    <p class="demo-description">🌟 OKLCH – a newer, more accurate lightness & hue combo.</p>
-    <code>background: oklch(70% 0.2 40)</code>
-  </div>
-
-  <div class="demo-section" id="colormixBox">
-    <h2>color-mix()</h2>
-    <p class="demo-description">🎨 Mix any two colors – soft pastels are easy!</p>
-    <code>background: color-mix(in srgb, red 60%, blue)</code>
-  </div>
-
-  <div class="demo-section" id="colorcontrastBox">
-    <h2>color-contrast()</h2>
-    <p class="demo-description">🔹 Text automatically chooses the most readable color!</p>
-    <code>color: color-contrast(white vs black, yellow, blue)</code>
+  <!-- 3D Layered Text Demo -->
+  <div class="text-3d-container">
+    <div class="text-3d">
+      <!-- Main text at front -->
+      <div class="layer" style="--i: 0;">3D Text Demo</div>
+      <!-- More layers behind -->
+      <div class="layer" style="--i: 1;">3D Text Demo</div>
+      <div class="layer" style="--i: 2;">3D Text Demo</div>
+      <div class="layer" style="--i: 3;">3D Text Demo</div>
+      <div class="layer" style="--i: 4;">3D Text Demo</div>
+      <div class="layer" style="--i: 5;">3D Text Demo</div>
+      <div class="layer" style="--i: 6;">3D Text Demo</div>
+      <div class="layer" style="--i: 7;">3D Text Demo</div>
+      <div class="layer" style="--i: 8;">3D Text Demo</div>
+      <div class="layer" style="--i: 9;">3D Text Demo</div>
+    </div>
   </div>
 
   <script>
-    // MAIN ELEMENTS
     const btn = document.getElementById("themeBtn");
     const body = document.body;
     const demoBox = document.getElementById("demoBox");
@@ -152,7 +141,6 @@
       "In nature, light creates color."
     ];
 
-    // CLICK HANDLER
     btn.addEventListener("click", () => {
       body.classList.toggle("dark");
 
@@ -160,37 +148,19 @@
       document.getElementById("counter").textContent =
         `Button clicks: ${clickCount}`;
 
-      // Rainbow hue rotation
       hue = (hue + 40) % 360;
-
-      // color-mix() applied to button
       const pure = `hsl(${hue}, 80%, 60%)`;
       const mixed = `color-mix(in srgb, ${pure}, white 20%)`;
       btn.style.backgroundColor = mixed;
 
-      // New quote
       const q = quotes[Math.floor(Math.random() * quotes.length)];
       document.getElementById("quote").textContent = `💬 "${q}"`;
 
-      // Update demo box color
       demoBox.style.background = pure;
     });
 
-    // INITIAL QUOTE
     document.getElementById("quote").textContent =
       `💬 "${quotes[Math.floor(Math.random() * quotes.length)]}"`;
-
-    // STATIC COLOR FUNCTION DEMOS
-    rgbBox.style.background = "rgb(255 120 120 / 80%)";
-    hslBox.style.background = "hsl(200 90% 60%)";
-    hwbBox.style.background = "hwb(260 10% 20%)";
-    labBox.style.background = "lab(70% -10 40)";
-    lchBox.style.background = "lch(70% 80 40)";
-    oklabBox.style.background = "oklab(75% -0.1 0.3)";
-    oklchBox.style.background = "oklch(70% 0.2 40)";
-    colormixBox.style.background = "color-mix(in srgb, red 60%, blue)";
-    colorcontrastBox.style.color =
-      "color-contrast(white vs black, yellow, blue)";
   </script>
 </body>
 </html>
