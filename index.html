@@ -58,15 +58,21 @@
     let clickCount = 0;
 
     btn.addEventListener('click', () => {
-      body.classList.toggle('dark');
-      
-      // Increment click counter
-      clickCount++;
-      document.getElementById('counter').textContent = `Button clicks: ${clickCount}`;
+  body.classList.toggle('dark');
 
-      // Change button color each click
-      const nextColor = colors[clickCount % colors.length];
-      btn.style.backgroundColor = nextColor;
+  // Increment click counter
+  clickCount++;
+  document.getElementById('counter').textContent = `Button clicks: ${clickCount}`;
+
+  // Change button color each click
+  const nextColor = colors[clickCount % colors.length];
+  btn.style.backgroundColor = nextColor;
+
+  // Change quote every click
+  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+  document.getElementById('quote').textContent = `💬 "${randomQuote}"`;
+});
+
     });
 
     // Ask for visitor's name
