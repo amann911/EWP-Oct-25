@@ -28,19 +28,45 @@
       background-color: #222;
       color: white;
     }
+    #quote {
+      margin-top: 1.5rem;
+      font-style: italic;
+      font-size: 1.2rem;
+    }
+    #counter {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <h1 id="welcome">👋 Hello there!</h1>
   <p id="greeting">Let's make your page come alive ✨</p>
+  
+  <p id="quote">Quote loading...</p>
+
   <button id="themeBtn">🌗 Toggle Dark Mode</button>
+
+  <p id="counter">Button clicks: 0</p>
 
   <script>
     const btn = document.getElementById('themeBtn');
     const body = document.body;
 
+    // Colors to cycle through
+    const colors = ["#ffd54f", "#ff8a80", "#80d8ff", "#ccff90", "#ea80fc", "#ffab40"];
+    let clickCount = 0;
+
     btn.addEventListener('click', () => {
       body.classList.toggle('dark');
+      
+      // Increment click counter
+      clickCount++;
+      document.getElementById('counter').textContent = `Button clicks: ${clickCount}`;
+
+      // Change button color each click
+      const nextColor = colors[clickCount % colors.length];
+      btn.style.backgroundColor = nextColor;
     });
 
     // Ask for visitor's name
@@ -56,6 +82,19 @@
     else if (hour < 18) message = "🌤️ Good afternoon!";
     else message = "🌙 Good evening!";
     document.getElementById('greeting').textContent = message;
+
+    // Quote of the day
+    const quotes = [
+      "Believe you can and you're halfway there.",
+      "Do something today that your future self will thank you for.",
+      "Every moment is a fresh beginning.",
+      "Dream big and dare to fail.",
+      "You are capable of amazing things.",
+      "Little steps every day lead to big results."
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('quote').textContent = `💬 "${randomQuote}"`;
   </script>
 </body>
 </html>
