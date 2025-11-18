@@ -4,16 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>🌈 My Interactive Page</title>
+
   <style>
     body {
       font-family: 'Poppins', sans-serif;
       text-align: center;
       padding: 2rem;
-      transition: all 0.4s ease;
+      transition: background-color 0.6s ease, color 0.3s ease;
       background-color: #fff8e7;
       color: #333;
     }
+
     h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+
     button {
       padding: 1rem 2rem;
       font-size: 1.2rem;
@@ -21,31 +24,37 @@
       border-radius: 10px;
       background-color: #ffd54f;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.4s ease;
     }
+
     button:hover { background-color: #ffb300; }
+
+    /* Modern dark mode using CSS color-mix() */
     .dark {
-      background-color: #222;
+      background-color: color-mix(in oklab, #222, black 40%);
       color: white;
     }
+
     #quote {
       margin-top: 1.5rem;
       font-style: italic;
       font-size: 1.2rem;
     }
+
     #counter {
       margin-top: 1rem;
       font-weight: bold;
     }
   </style>
 </head>
+
 <body>
   <h1 id="welcome">👋 Hello there!</h1>
   <p id="greeting">Let's make your page come alive ✨</p>
-  
+
   <p id="quote">Quote loading...</p>
 
-  <button id="themeBtn">🌗 Toggle Dark Mode</button>
+  <button id="themeBtn">🌗 Toggle Magic Mode</button>
 
   <p id="counter">Button clicks: 0</p>
 
@@ -53,11 +62,13 @@
     const btn = document.getElementById('themeBtn');
     const body = document.body;
 
-    // Colors for cycling button background
-    const colors = ["#ffd54f", "#ff8a80", "#80d8ff", "#ccff90", "#ea80fc", "#ffab40"];
+    // HSL rainbow hue rotation
+    let hue = 0;
+
+    // Click counter
     let clickCount = 0;
 
-    // Quotes list
+    // Quotes
     const quotes = [
       "Believe you can and you're halfway there.",
       "Do something today that your future self will thank you for.",
@@ -67,24 +78,31 @@
       "Little steps every day lead to big results."
     ];
 
-    // Button click handler
     btn.addEventListener('click', () => {
+      // Toggle theme
       body.classList.toggle('dark');
 
-      // Increment click counter
+      // Increase click count
       clickCount++;
-      document.getElementById('counter').textContent = `Button clicks: ${clickCount}`;
+      document.getElementById('counter').textContent =
+        `Button clicks: ${clickCount}`;
 
-      // Color change each click
-      const nextColor = colors[clickCount % colors.length];
-      btn.style.backgroundColor = nextColor;
+      // 🌈 Rainbow color rotation using HSL math
+      hue = (hue + 40) % 360;
 
-      // Change quote every click
+      // Mix the rainbow color with white for softer tones
+      const rainbowColor = `hsl(${hue}, 80%, 60%)`;
+      const mixedColor = `color-mix(in srgb, ${rainbowColor}, white 20%)`;
+
+      // Apply the mixed color
+      btn.style.backgroundColor = mixedColor;
+
+      // New quote every click
       const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
       document.getElementById('quote').textContent = `💬 "${randomQuote}"`;
     });
 
-    // Ask for visitor's name
+    // Ask name
     const name = prompt("What's your name?");
     if (name) {
       document.getElementById('welcome').textContent = `Welcome, ${name}! 🎉`;
@@ -98,7 +116,7 @@
     else message = "🌙 Good evening!";
     document.getElementById('greeting').textContent = message;
 
-    // First quote on page load
+    // Initial quote
     const firstQuote = quotes[Math.floor(Math.random() * quotes.length)];
     document.getElementById('quote').textContent = `💬 "${firstQuote}"`;
   </script>
